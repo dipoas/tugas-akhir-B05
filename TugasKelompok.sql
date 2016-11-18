@@ -318,9 +318,9 @@ INSERT INTO KATEGORI_LOG(ID, Kategori) VALUES
 ,(440002, '2')
 ,(440003, '3')
 ,(440004, '4')
-,(440002, '5')
-,(440003, '6')
-,(440004, '7');
+,(440005, '5')
+,(440006, '6')
+,(440007, '7');
 
 
 INSERT INTO LOG(IDLog, IDLamaran, NPM, ID_kat_log, ID_st_log, tanggal, jam_mulai, jam_selesai, deskripsi_kerja ) VALUES 
