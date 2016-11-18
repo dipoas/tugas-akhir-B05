@@ -71,7 +71,7 @@ INSERT INTO DOSEN_KELAS_MK(NIP, IDKelasMK) VALUES
 ,('1780006',80050);
 
 
-INSERT INTO LOWONGAN(IDLowongan, IDKelasMK, Kode_MK, Status, Jumlah_Asisten, Syarat_Tambahan, NIPDosenPembuka) VALUES
+INSERT INTO LOWONGAN(IDLowongan, IDKelasMK, Status, Jumlah_Asisten, Syarat_Tambahan, NIPDosenPembuka) VALUES
  (7300001,80001,FALSE,1,'Lulus MD1','1780043')
 ,(7300002,80036,TRUE,4,NULL,'1780043')
 ,(7300003,80008,TRUE,1,NULL,'1780044')
@@ -123,7 +123,7 @@ INSERT INTO LOWONGAN(IDLowongan, IDKelasMK, Kode_MK, Status, Jumlah_Asisten, Sya
 ,(7300049,80015,TRUE,4,NULL,'1780016')
 ,(7300050,80017,TRUE,7,'Minimum merupakan semester 5 pada periode ini','1780015');
 
-INSERT INTO LOWONGAN(IDLowongan, IDKelasMK, Kode_MK, Status, Jumlah_Asisten, Syarat_Tambahan, NIPDosenPembuka) VALUES
+INSERT INTO LOWONGAN(IDLowongan, IDKelasMK, Status, Jumlah_Asisten, Syarat_Tambahan, NIPDosenPembuka) VALUES
  (7300051,80024,TRUE,4,NULL,'1780041')
 ,(7300052,80034,TRUE,10,NULL,'1780010')
 ,(7300053,80034,FALSE,9,NULL,'1780044')
