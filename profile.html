@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile</title>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+	<nav class="indigo darken-3">
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo center">SIASISTEN</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Profile</a></li>
+				<li><a href="#">Log Out</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h3 class="grey-text text-darken-3">Ubah Profile</h3>
+		<br>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<input disabled placeholder="1406612381" id="npm" type="number" class="validate">
+						<label for="npm">NPM</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input disabled placeholder="Nama Anda" id="name" type="text" class="validate">
+						<label for="name">Name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input disabled placeholder="username" id="username" type="text" class="validate">
+						<label for="username">Userame</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="password" type="password" class="validate">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input disabled placeholder="name@mail.com" id="email" type="email" class="validate">
+						<label for="email">Email</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="email-aktif" type="email" class="validate">
+						<label for="email-aktif">Email Aktif</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="waktu_kosong" type="text" class="validate">
+						<label for="waktu_kosong">Waktu kosong</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="telepon" type="number" class="validate">
+						<label for="telepon">Telepon</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="bank" type="text" class="validate">
+						<label for="bank">Bank</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="nomor_rekening" type="number" class="validate">
+						<label for="nomor_rekening">Nomor Rekening</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="file-field input-field col s10">
+						<div class="btn">
+							<span>File</span>
+							<input type="file">
+						</div>
+						<div class="file-path-wrapper">
+							<input id="hlmmuka" class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="file-field input-field col s2">
+						<label>Halaman muka buku tabungan</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="file-field input-field col s10">
+						<div class="btn">
+							<span>File</span>
+							<input type="file">
+						</div>
+						<div class="file-path-wrapper">
+							<input id="hlmmuka" class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="file-field input-field col s2">
+						<label>Foto</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="row center-align">
+					<button class="waves-effect waves-light btn">Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>
