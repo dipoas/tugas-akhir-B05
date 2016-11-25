@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+	<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></link>
+	<script
+		src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#myTable').DataTable();
+		});
+	</script>
+</head>
+
+<body>
+	<nav class="indigo darken-3">
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo center">SIASISTEN</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Profile</a></li>
+				<li><a href="#">Log Out</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h3 class="grey-text text-darken-3">Daftar Pelamar <small><span style="color:#ff4d4d; 
+		font-style:italic;">(dosen/admin)</span></small></h3>
+		 <table class="bordered">
+    <tbody>
+      <tr>
+        <td>Mata Kuliah</td>
+        <td>:</td>
+        <td>Basis Data</td>
+      </tr>
+      <tr>
+        <td>Term</td>
+        <td>:</td>
+        <td>2016/2017, Ganjil</td>
+      </tr>
+     
+    </tbody>
+  </table>
+  <br>
+  
+		 <table id="myTable" class="bordered">
+		 
+			<thead>
+			  <tr>
+				<th>No.</th>
+				<th>Nama</th>
+				<th>NPM</th>
+				<th>Email</th>
+				<th>Profil</th>
+				<th>Status</th>
+			  </tr>
+			</thead>
+			<tbody>
+				 <tr>
+					<td>1</td>
+					<td>Kim Jong In</td>
+					<td>1401199400</td>
+					<td>kimkai@example.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Melamar</td>
+				  </tr>
+				  <tr>
+					<td>2</td>
+					<td>Krystal Jung</td>
+					<td>1417101994</td>
+					<td>krystal@example.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Melamar</td>
+				  </tr>
+				  <tr>
+					<td>3</td>
+					<td>Mary Jane</td>
+					<td>1407765234</td>
+					<td>maryjane@example.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Diterima</td>
+				  </tr>
+				  <tr>
+					<td>4</td>
+					<td>Bruce Lee</td>
+					<td>1409076123</td>
+					<td>bruce@yahoo.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Ditolak</td>
+				  </tr>
+				  <tr>
+					<td>5</td>
+					<td>Donald Trump</td>
+					<td>1409908700</td>
+					<td>mcdonald@trump.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Ditolak</td>
+				  </tr>
+				  <tr>
+					<td>6</td>
+					<td>Harry Potter</td>
+					<td>1408823456</td>
+					<td>potter@yahoo.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Diterima</td>
+				  </tr>
+				  <tr>
+					<td>7</td>
+					<td>Isabella Swan</td>
+					<td>1406623789</td>
+					<td>bella@swan.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Melamar</td>
+				  </tr>
+				  <td>8</td>
+					<td>Cedric Diggory</td>
+					<td>1406623000</td>
+					<td>cedric@mine.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Direkomendasikan</td>
+				  </tr>
+				  <td>9</td>
+					<td>Kaname Kuran</td>
+					<td>1406573289</td>
+					<td>kaname@jp.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Diterima</td>
+				  </tr>
+				  <td>10</td>
+					<td>Mario Maurer</td>
+					<td>1406489288</td>
+					<td>mario@bross.com</td>
+					<td><a href="#">Lihat</a></td>
+					<td>Melamar</td>
+				  </tr>
+			</tbody>
+			
+		</table>
+		
+		
+	</div>
+
+</body>
+</html>
