@@ -1,0 +1,33 @@
+create or replace function update_mahasiswa_melamar()
+returns trigger as
+$$
+begin
+	update lowongan set jumlah_pelamar=jumlah_pelamar+1 where idlowongan = new.idlowongan;
+	return new;
+end;
+$$ language 'plpgsql' volatile;
+
+create trigger update_jumlah_pelamar
+after insert
+on lamaran
+for each row
+execute procedure update_mahasiswa_melamar();
+
+INSERT INTO LAMARAN(IDLamaran, NPM, IDLowongan, ID_st_lamaran, IPK, JumlahSKS, NIP) VALUES (12000150,'1406500066',7300042,330004,2.84,17,NULL);
+
+create or replace function update_pelamar_diterima()
+returns trigger as
+$$
+begin
+	if (new.id_st_lamaran = 330003) then
+		update lowongan set jumlah_pelamar_diterima=jumlah_pelamar_diterima+1 where idlowongan=old.idlowongan;
+	end if;
+	return new;
+end;
+$$ language 'plpgsql' volatile;
+
+create trigger add_pelamar
+after update
+on lamaran
+for each row
+execute procedure update_pelamar_diterima();
