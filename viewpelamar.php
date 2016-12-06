@@ -46,6 +46,7 @@
 							siasisten.status_lamaran.id = siasisten.lamaran.id_st_lamaran AND
 							siasisten.lowongan.idkelasmk = siasisten.kelas_MK.idkelasmk AND
 							siasisten.kelas_MK.kode_MK = siasisten.mata_kuliah.kode AND
+							siasisten.lowongan.idlowongan = siasisten.lamaran.idlowongan AND
 							siasisten.lowongan.idlowongan = 7300001  
 							';
 							
