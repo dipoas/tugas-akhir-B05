@@ -1,5 +1,56 @@
 <?php
-	require "connect.php";
+	include "session.php";
+	
+	if(!connect())
+		die(pg_last_error());
+		
+    session_start();
+    if(!isset ($_SESSION["username"])){
+        header("Location: index.php");
+    }
+	
+    $role = $_SESSION["role"];
+
+// QUERY ADMIN
+	$conn = connect();
+	$sql = "Select Distinct mata_kuliah.Kode as kode, lowongan.IDkelasMK as ID, Mata_kuliah.nama as nama, dosen.nama as dosen, lowongan.status as status, lowongan.jumlah_asisten as jumlahasisten, lowongan.jumlah_pelamar as pelamar from term, lowongan join kelas_mk ON lowongan.IDkelasMK=kelas_mk.IDkelasMK join mata_kuliah on mata_kuliah.kode=kelas_mk.kode_mk join dosen on dosen.NIP=lowongan.NIPDosenPembuka Order by Dosen.nama ASC;";
+    $ADMIN = [];
+    $result = pg_query($conn,$sql) or die(pg_last_error($conn));
+	
+    if(pg_num_rows($result) > 0) {
+      while ($row = pg_fetch_assoc($result)) {
+        $ADMIN[] = [$row["kode"],$row["nama"], $row['dosen'],  $row['status'], $row['jumlahasisten'], $row['pelamar'] ];
+      }
+    } 
+
+// QUERY UNTUK DOSEN
+	$namadosen=$_SESSION["username"];
+    $sql = "Select Distinct mata_kuliah.Kode as kode, lowongan.IDkelasMK as ID, Mata_kuliah.nama as nama, dosen.nama as dosen, lowongan.status as status, lowongan.jumlah_asisten as jumlahasisten, lowongan.jumlah_pelamar as pelamar from term, lowongan join kelas_mk ON lowongan.IDkelasMK=kelas_mk.IDkelasMK join mata_kuliah on mata_kuliah.kode=kelas_mk.kode_mk join dosen on dosen.NIP=lowongan.NIPDosenPembuka where term.tahun='2016' AND dosen.username= '$namadosen' Order by Dosen.nama ASC";   
+    $dosen = [];
+    $result = pg_query($conn,$sql) or die(pg_last_error($conn));
+
+    if(pg_num_rows($result) > 0) {
+      while ($row = pg_fetch_assoc($result)) {
+		
+         $dosen[] = [$row["kode"],$row["nama"], $row['dosen'],  $row['status'], $row['jumlahasisten'], $row['pelamar'] ];
+		}
+    }
+
+
+
+// QUERY UNTUK MAHASISWA
+	$namaMHS=$_SESSION["username"];
+    $sql = "Select Distinct mata_kuliah.Kode as kode, lowongan.IDkelasMK as ID, Mata_kuliah.nama as nama, dosen.nama as dosen, lowongan.status as status, lowongan.jumlah_asisten as jumlahasisten, lowongan.jumlah_pelamar as pelamar, status_lamaran.status as statuslamaran from term, mahasiswa, lowongan join kelas_mk ON lowongan.IDkelasMK=kelas_mk.IDkelasMK join mata_kuliah on mata_kuliah.kode=kelas_mk.kode_mk join dosen on dosen.NIP=lowongan.NIPDosenPembuka join lamaran on lamaran.IDlowongan=lowongan.IDlowongan join status_lamaran on status_lamaran.ID=lamaran.ID_st_lamaran where term.tahun='2016' AND lamaran.NPM= mahasiswa.NPM Order by lowongan.status ASC";
+	$mahasiswa = [];
+    $result = pg_query($conn,$sql) or die(pg_last_error($conn));
+
+    if(pg_num_rows($result) > 0) {
+      while ($row = pg_fetch_assoc($result)) {
+        $mahasiswa[] = [$row["kode"],$row["nama"], $row['dosen'],  $row['status'], $row['jumlahasisten'], $row['pelamar'], $row['statuslamaran'] ];
+      }
+    }
+
+
 ?>
 
 
@@ -58,27 +109,47 @@
 						<td><a href=""><i class="material-icons">mode_edit</i></a><a href=""><i class="material-icons">not_interested</i></a></td>
 					  </tr>
 					  
-					  <tr>
-						<td>CS1234</td>
-						<td>Basis Data Lanjut</td>
-						<td>Anto, Bimo</td>
-						<td>Buka</td>
-						<td>3</td>
-						<td><a href="">3</a></td>
-						<td>2</td>
-						<td><a href=""><i class="material-icons">mode_edit</i></a><a href=""><i class="material-icons">not_interested</i></a></td>
-					  </tr>
-					  
-					  <tr>
-						<td>CS1233</td>
-						<td>Data-dasar Pemprograman</td>
-						<td>Charlie</td>
-						<td>Buka</td>
-						<td>2</td>
-						<td><a href="">1</a></td>
-						<td>0</td>
-						<td><a href=""><i class="material-icons">mode_edit</i></a><a href=""><i class="material-icons">not_interested</i></a></td>
-					  </tr>
+					  <?php if($role =="admin") : ?>
+
+						<div class="container">
+                      				<h1>DASBOARD</h1>
+							<div class="panel panel-default">
+							<div class="panel-heading">
+								<div>
+									<h2>Daftar Lowongan Asisten</h2>
+								</div>	
+							<div class="table table-bordered ">
+								<br>
+									<table>
+									  <tr>
+										<th>Kode</th>
+										<th>Mata Kuliah</th>
+										<th>Dosen Pengajar</th>
+										<th>Status</th>
+										<th>Jumlah Asisten Dibutuhkan</th>
+										<th>Jumlah Pelamar</th>
+										<th>Jumlah Pelamar Diterima</th>			
+										<th>Action  </th>
+									  </tr>
+					<?php foreach ($ADMIN as $DaftarPelamarAdmin) : ?>
+					<tr>
+					    <td><?= $DaftarPelamarAdmin[0] ?></td>
+					    <td><?= $DaftarPelamarAdmin[1] ?></td>
+					    <td><?= $DaftarPelamarAdmin[2] ?></td>
+					    <td><?= $DaftarPelamarAdmin[3] ?></td>
+										<td></td>
+										<td></td>
+										<td><a href='".$link_address."'>Edit</a>
+											<a href='".$link_address."'>Hapus</a></td>
+					</tr>
+					<?php endforeach; ?>
+                                
+					    </table>
+						</div>
+					    </div>
+					</div>
+				    </div>
+						<?php endif; ?>
 					</tbody>
 				</table>
 		
