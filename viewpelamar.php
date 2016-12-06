@@ -27,7 +27,16 @@
 
 		//$namamatkul = $_GET["nama"];
 			$conn = connectDB();
-			$sql = 'SELECT  mahasiswa.email,
+			$idlowongan = '';
+			if (isset($_GET['idlowongan'])){
+				$idlowongan = $_GET['idlowongan'];
+			}
+			$sql= "SELECT k.tahun, k.semester, mk.nama, mk.kode from SIASISTEN.lowongan l, SIASISTEN.kelas_mk k, SIASISTEN.mata_kuliah mk 
+			WHERE l.idlowongan = $idlowongan AND l.idkelasmk = k.idkelasmk AND k.kode_mk = mk.kode";
+			
+			
+			
+			$sql2 = "SELECT  mahasiswa.email,
 							mahasiswa.npm,
 							mahasiswa.nama,
 							
@@ -47,21 +56,25 @@
 							siasisten.lowongan.idkelasmk = siasisten.kelas_MK.idkelasmk AND
 							siasisten.kelas_MK.kode_MK = siasisten.mata_kuliah.kode AND
 							siasisten.lowongan.idlowongan = siasisten.lamaran.idlowongan AND
-							siasisten.lowongan.idlowongan = 7300001  
-							';
+							siasisten.lowongan.idlowongan = '$idlowongan'";
 							
 			$result = pg_query($conn, $sql);
+			$result2 = pg_query($conn, $sql2);
 			
-			/** while($row = pg_fetch_assoc($result)) {
-				$npm = $row["npm"];
+			while($row = pg_fetch_assoc($result)) {
+				$tahun = $row["tahun"];
 				$semester = $row["semester"];
-				$status = $row["status"];
-				$nama = $row["nama"];
-				$namaMK = $row["namaMK"];
-				$email = $row["email"];
+				$namaMatkul = $row["nama"];
+				$kode_mk = $row["kode"];
+			}
+			while($row2 = pg_fetch_assoc($result2)) {
+				$npm = $row2["npm"];
+				$status = $row2["status"];
+				$nama = $row2["nama"];
+				$email = $row2["email"];
 				
 				 
-			} */
+			}
 		//$namauser = str_replace('_', ' ', $namauser);
 		 //require "role.php"
 ?>
@@ -112,15 +125,18 @@
       <tr>
         <td>Mata Kuliah</td>
         <td>:</td>
-        <td><?php echo $nama = "Basis Data"; ?></td>
+        <td><?php echo $namaMatkul; ?></td>
       </tr>
       <tr>
         <td>Term</td>
         <td>:</td>
-        <td>2015/2016, <!-- <?php if($semester == 1 ) :?> Ganjil
-						<?php elseif($semester == 2 ) :?> Genap
-						<?php elseif($semester == 3 ) :?> Pendek
-						<?php endif; ?></td> --> Ganjil
+        <td> 
+			<?php echo $tahun ?>, 
+			<?php if($semester == 1 ) :?> Ganjil 
+			<?php elseif($semester == 2 ) :?> Genap 
+			<?php elseif($semester == 3 ) :?> Pendek
+			<?php endif; ?>
+		</td>
 						
       </tr>
      
@@ -144,34 +160,41 @@
 			
 						<?php
 							$nomor = 0;
-							while($row = pg_fetch_assoc($result)) {
-								$npm = $row["npm"];
-								$nomor = $nomor + 1;
-								$status = $row["status"];
-								$nama = $row["nama"];
-								
-								$email = $row["email"];
+							$sql3 = "SELECT npm, status from SIASISTEN.lamaran, SIASISTEN.status_lamaran WHERE idlowongan = $idlowongan AND id_st_lamaran = id";
+							$result3 = pg_query($conn, $sql3);
+							$npm = '';
+							$status = '';
+							while($row3 = pg_fetch_assoc($result3)) {
+								$npm = $row3["npm"];
+								$status = $row3["status"];
+								$sql4 = "SELECT * from SIASISTEN.mahasiswa WHERE npm = '$npm'";
+								$result4 = pg_query($conn, $sql4);
+								while($row = pg_fetch_assoc($result4)) {
+									$npm = $row["npm"];
+									$nomor = $nomor + 1;
+									$nama = $row["nama"];
+									$email = $row["email"];
 
-							echo '<tr>
-							<td>' . $nomor . '</td>
-							<td>' . $nama . '</td>
-							<td>' . $npm . '</td>
-							<td>' . $email . '</td>
-							<td><a href="detailpelamar.php?npm='.$npm.'"> Lihat </a></td>
-							<td>';
-									
-								if($status == 1) {
-								 echo "Melamar";
-								 } else if($status == 2) {
-									 echo "Direkomendasikan";
-								 } else if($status == 3) {
-									 echo "Diterima";
-								 } else if($status == 4) {
-									 echo "Ditolak";
-								 }
-								   
-							echo '	</td>
-							</tr>';
+									echo '<tr>
+									<td>' . $nomor . '</td>
+									<td>' . $nama . '</td>
+									<td>' . $npm . '</td>
+									<td>' . $email . '</td>
+									<td><a href="detailpelamar.php?npm='.$npm.'"> Lihat </a></td>
+									<td>';
+											
+										if($status == 1) {
+										 echo "Melamar";
+										 } else if($status == 2) {
+											 echo "Direkomendasikan";
+										 } else if($status == 3) {
+											 echo "Diterima";
+										 } else if($status == 4) {
+											 echo "Ditolak";
+										 }
+										'</td>
+									</tr>';
+								}
 							}
 						?>
 			</tbody>

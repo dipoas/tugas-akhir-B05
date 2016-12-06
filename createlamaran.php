@@ -31,7 +31,13 @@
 
 		//$namamenu = $_GET["nama"];
 			$conn = connectDB();
-			$sql = "SELECT  kelas_mk.idkelasmk,
+			$idlowongan = '';
+			if (isset($_GET['idlowongan'])){
+				$idlowongan = $_GET['idlowongan'];
+			}
+			$sql= "SELECT k.tahun, k.semester, mk.nama, mk.kode from SIASISTEN.lowongan l, SIASISTEN.kelas_mk k, SIASISTEN.mata_kuliah mk 
+			WHERE l.idlowongan = $idlowongan AND l.idkelasmk = k.idkelasmk AND k.kode_mk = mk.kode";
+			/**$sql = "SELECT  kelas_mk.idkelasmk,
 							kelas_mk.tahun,
 							kelas_mk.semester,
 							kelas_mk.kode_mk,
@@ -46,19 +52,50 @@
 					WHERE   kelas_mk.idkelasmk = lowongan.idkelasmk AND
 							kelas_mk.kode_mk = mata_kuliah.kode
 							
-							;";
+							;";*/
 			$result = pg_query($conn, $sql);
 			
 			while($row = pg_fetch_assoc($result)) {
 				$tahun = $row["tahun"];
 				$semester = $row["semester"];
-				$kode_mk = $row["kode_mk"];
-				$nama = $row["nama"];
-				
+				$namaMatkul = $row["nama"];
+				$kode_mk = $row["kode"];
 			//	$kategori = $row["kategori"];
 			}
 		//$namamenu = str_replace('_', ' ', $namamenu);
 		 //require "role.php"
+		 			/** session_start();
+			if(!isset($_SESSION["username"])){
+				header("Location: index.php");
+			} */
+	
+		/**if($_SERVER["REQUEST_METHOD"] == "POST"){
+			$ipk = $_POST["ipk"];
+			$jumlahSKS = $_POST["jumlahSKS"];
+			
+			$sql2 = "SELECT max(idlamaran) from SIASISTEN.lamaran";
+			$result = pg_query($conn, $sql2);
+			$row = pg_fetch_array($result);
+			$idlamaran = $row['max'];
+			
+			$username = $_SESSION['username'];
+			$sqlnpm = "SELECT npm from SIASISTEN.mahasiswa WHERE username = '$username'";
+			$resultnpm = pg_query($conn, $sqlnpm);
+			$row = pg_fetch_array($resultnpm);
+			$npm = $row['npm'];
+			
+			$sql = "SELECT nipdosenpembuka from SIASISTEN.lowongan WHERE idlowongan = $idlowongan";
+			$result = pg_query($conn, $sql);
+			$row = pg_fetch_array($result);
+			$nip = $row['nipdosenpembuka'];
+			
+			$sql = "INSERT INTO SIASISTEN.lamaran(idlamaran, npm, idlowongan, id_st_lamaran, ipk, jumlahSKS, nip) VALUES ($idlamaran+1, '$npm', '$idlowongan', '330001', '$ipk', '$jumlahSKS', '$nip');";
+			if (pg_query($conn, $sql)) {
+				header('Location: confirm.php?nama=$namaMatkul');
+			}
+		//$sql2 = "INSERT INTO FOODIE.pembelian_bahan_baku(namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES ('$namaBahans', '$nomornotas', '$belis', '$satuans', '$hargas')";
+		//$result2 = pg_query($conn, $sql2);
+		}*/
 ?>
 
 <!DOCTYPE html>
@@ -105,14 +142,14 @@
 				</tr>
 				<tr class="collection">
 					<th class="collection">Mata Kuliah</th>
-					<td><?php echo $nama ?></p></td>
+					<td><?php echo $namaMatkul ?></p></td>
 				</tr>
 				<tr class="collection">
-					<form>
+					<form action="confirm.php?idlowongan=<?php echo $idlowongan;?>" method="post">
 						<div class="bordered">
 							<th class="collection">IPK</th> 
 							<td><input
-								type="number"  step="any" min="1" max="4" class="collection" name="nomor"
+								type="number"  step="any" min="1" max="4" class="collection" name="ipk"
 								placeholder="Masukkan nilai IPK Anda" required></input></td>
 						</div>
 				</tr>
@@ -120,7 +157,7 @@
 						<div class="bordered">
 						<th class="collection">SKS</th> 
 							<td><input
-								type="number" min="1" class="collection" name="nomor"
+								type="number" min="1" class="collection" name="jumlahSKS"
 								placeholder="Masukkan jumlah SKS yang Anda ambil sekarang" required></input></td>
 						</div>
 						
@@ -131,9 +168,9 @@
 			<div style="text-align: center">         
 				<button type="submit" class="btn btn-default">Daftar</button>
 				&nbsp; &nbsp;
-				<button class="btn btn-default"><a href="index.php">Batal</button>
+			</form>
+			<a href="melihatLowongan.php"><button class="btn btn-default" >Batal</button></a>
 			</div>
-					</form>
 	</div>
 	
 	</body>
